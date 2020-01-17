@@ -6,7 +6,6 @@ import "./App.css";
 import Routes from "./Routes";
 import { Auth } from "aws-amplify";
    
-
 function App(props) {
 
   const [isAuthenticating, setIsAuthenticating] = useState(true);
