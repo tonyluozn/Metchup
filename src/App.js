@@ -11,7 +11,6 @@ function App(props) {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   // below: right now set it to true 
   const [isAuthenticated, userHasAuthenticated] = useState(false);
-  
   useEffect(() => {
     onLoad();
   }, []);
@@ -79,7 +78,5 @@ function App(props) {
     props.history.push("/");
   }
 }
-
-
 
 export default withRouter(App);

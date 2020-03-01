@@ -41,7 +41,7 @@ export default function Home(props) {
         </LinkContainer>
       ) : 
         <>
-        <LinkContainer key="new" to="/notes/new">
+        <LinkContainer key="new" to="/notes/search">
           <ListGroupItem>
             <h4>
               <b>{"\uFF0B"}</b> Add a new class
@@ -79,7 +79,7 @@ export default function Home(props) {
   function renderNotes() {
     return (
       <div className="notes">
-        <PageHeader>Your Classes</PageHeader>
+        <PageHeader>My Classes</PageHeader>
         <ListGroup>
           {!isLoading && renderNotesList(notes)}
         </ListGroup>

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewNote.css";
@@ -15,9 +15,6 @@ export default function NewNote(props) {
     return content.length > 0;
   }
 
-  function handleFileChange(event) {
-    file.current = event.target.files[0];
-  }
 
   async function handleSubmit(event) {
     event.preventDefault();

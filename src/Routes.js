@@ -6,7 +6,7 @@ import Login from "./containers/Login";
 import AppliedRoute from "./components/AppliedRoute";
 import Signup from "./containers/Signup";
 import NewNote from "./containers/NewNote";
-
+import ClassSearch from "./containers/ClassSearch";
 
 
 export default function Routes({ appProps }) {
@@ -16,8 +16,10 @@ export default function Routes({ appProps }) {
         <AppliedRoute path="/login" exact component={Login} appProps={appProps} />
         <AppliedRoute path="/signup" exact component={Signup} appProps={appProps} />
         <AppliedRoute path="/notes/new" exact component={NewNote} appProps={appProps} />
+        <AppliedRoute path="/notes/search" exact component={ClassSearch} appProps={appProps} />
         { /* Finally, catch all unmatched routes */ }
         <Route component={NotFound} />
+        
       </Switch>
     );
   }
