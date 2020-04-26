@@ -8,7 +8,7 @@ const Courses = ({ courses }) => {
         <div class="Course">
           <div class="course-info">
             <h5 class="course-title">{courses.title} </h5>
-            <h5 class="course-name"> {courses.subject} - {courses.catalog_num}: {courses.topic}</h5>
+            <h5 class="course-name"> {courses.subject} {courses.catalog_num}: {courses.topic}</h5>
             <h6 class="course-term">{courses.term}</h6>
             <h6 class="course-instructor">{courses.instructor}</h6>
             <h6 class="course-section"> Section {courses.section}</h6>
