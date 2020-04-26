@@ -35,7 +35,7 @@ function App(props) {
       <Navbar fluid collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/">Metchup</Link>
+            <Link to="/"><strong>Metchup</strong></Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
@@ -55,7 +55,7 @@ function App(props) {
                   <LinkContainer to="/login">
                     <NavItem>Login</NavItem>
                   </LinkContainer>
-                  <NavItem onClick={handleGetin}>getin</NavItem>
+                  <NavItem onClick={handleGetin}>Fast Getin</NavItem>
                 </>
             }
           </Nav>
