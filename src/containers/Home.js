@@ -3,7 +3,7 @@ import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import "./Home.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
-
+import ClassModal from './Modal'
 
 function loadNotes() {
   return API.get("notes", "/notes");
@@ -32,39 +32,29 @@ export default function Home(props) {
   }, [props.isAuthenticated]);
   
   function renderNotesList(notes) {
-    return [{}].concat(notes).map((note, i) =>
-      i !== 0 ? (
-        <LinkContainer key={note.noteId} to={`/notes/${note.noteId}`}>
-          <ListGroupItem header={note.content.trim().split("\n")[0]}>
-            {"Created: " + new Date(note.createdAt).toLocaleString()}
-          </ListGroupItem>
-        </LinkContainer>
-      ) : 
-        <>
-        <LinkContainer key="new" to="/notes/search">
-          <ListGroupItem>
-            <h4>
-              <b>{"\uFF0B"}</b> Add a new class
-            </h4>
-          </ListGroupItem>
-        </LinkContainer>
-
-        <LinkContainer key="new" to="/notes">
-          <ListGroupItem>
-            <h4>
-              CS 211       ___Members: 24 
-            </h4>
-          </ListGroupItem>
-        </LinkContainer>
-        <LinkContainer key="new" to="/notes">
-          <ListGroupItem>
-            <h4>
-              CS 214       ___Members: 10
-            </h4>
-          </ListGroupItem>
-        </LinkContainer>
-        </>
-    );
+  return(
+  <div>
+    <LinkContainer key="new" to="/notes/search">
+      <ListGroupItem>
+        <h4>
+          <b>{"\uFF0B"}</b> Add a new class
+        </h4>
+      </ListGroupItem>
+    </LinkContainer>
+   
+    <ListGroup>
+      <ListGroupItem>
+        <ClassModal name="COMP_SCI 214"/>
+      </ListGroupItem>
+      <ListGroupItem>
+        <ClassModal name="MATH 290-3"/>
+      </ListGroupItem>
+      <ListGroupItem>
+        <ClassModal name="ECON 310-1"/>
+      </ListGroupItem>
+    </ListGroup>
+  </div>
+  );
   }
 
   function renderLander() {
