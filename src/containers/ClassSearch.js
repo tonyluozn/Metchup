@@ -10,14 +10,10 @@ export default function ClassSearch(props) {
   const [input, setString] = useState(null);
 
   const elementStyle ={
-    border:'solid',
     borderRadius:'10px',
     position:'relative',
-    left:'10vh',
-    height:'3vh',
-    width:'20vh',
-    marginTop:'5vh',
-    marginBottom:'10vh'
+    marginTop:'5px',
+    marginBottom:'10px'
   }
 
   function includes(course_data,search_input){
@@ -44,13 +40,13 @@ export default function ClassSearch(props) {
     }
   }).map(data=>{
     return(
-    <ListGroupItem class="Course">
-      <div class="course-info">
-          <h4 class="course-title"><strong>{data.title} </strong></h4>
-          <h5 class="course-name"> {data.subject} {data.catalog_num}: {data.topic}</h5>
-          <h6 class="course-term">{data.term}</h6>
-          <h6 class="course-instructor">{data.instructor}</h6>
-          <h6 class="course-section"> Section {data.section}</h6>
+    <ListGroupItem  key={(data.title+data.topic+data.section).toString()} className="Course" style={elementStyle}>
+      <div className="course-info">
+          <h4 className="course-title"><strong>{data.title} </strong></h4>
+          <h5 className="course-name"><strong> {data.subject} {data.catalog_num}</strong>: {data.topic}</h5>
+          <h6 className="course-term">{data.term}</h6>
+          <h6 className="course-instructor">{data.instructor}</h6>
+          <h6 className="course-section"> Section {data.section}</h6>
       </div>
     </ListGroupItem>
     )
@@ -58,7 +54,7 @@ export default function ClassSearch(props) {
 
   return (
       <ListGroup>
-      <input type="text" placeholder="Enter class" onChange={(e)=>setString(e.target.value)} />
+      <input type="text" placeholder="Enter class" style={elementStyle} onChange={(e)=>setString(e.target.value)} />
       {courses}      
       </ListGroup>
       
