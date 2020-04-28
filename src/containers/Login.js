@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
-import { Auth } from "aws-amplify";
+import { Auth } from "../firebase";
 import LoaderButton from "../components/LoaderButton";
 
 export default function Login(props) {
@@ -15,17 +15,16 @@ export default function Login(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-  
     setIsLoading(true);
   
-    try {
-      await Auth.signIn(email, password);
-      props.userHasAuthenticated(true);
-      props.history.push("/");
-    } catch (e) {
-      alert(e.message);
-      setIsLoading(false);
-    }
+    Auth.signInWithEmailAndPassword(email, password)
+    .then(function() {
+      console.log("Logged in");
+      // 如何跳转页面？
+    })
+    .catch(function(err) {
+      console.error("Error: ", err);
+    })
   }
 
   return (

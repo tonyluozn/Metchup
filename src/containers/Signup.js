@@ -8,7 +8,7 @@ import {
 import LoaderButton from "../components/LoaderButton";
 import { useFormFields } from "../libs/hooksLib";
 import "./Signup.css";
-import { Auth } from "aws-amplify";
+import { Auth } from "../firebase"
 
 export default function Signup(props) {
   const [fields, handleFieldChange] = useFormFields({
@@ -36,25 +36,20 @@ export default function Signup(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-  
     setIsLoading(true);
   
-    try {
-      const newUser = await Auth.signUp({
-        username: fields.email,
-        password: fields.password
-      });
-      setIsLoading(false);
-      setNewUser(newUser);
-    } catch (e) {
-      alert(e.message);
-      setIsLoading(false);
-    }
+    Auth.createUserWithEmailAndPassword(fields.email, fields.password)
+    .then(function() { 
+      console.log("User created with email: ", fields.email);
+    })
+    .catch(function(error) {
+      console.error("Error: ", error);
+    });
+    // 确认邮箱之类的有点复杂，先comment掉了
   }
   
-  async function handleConfirmationSubmit(event) {
+  /*async function handleConfirmationSubmit(event) {
     event.preventDefault();
-  
     setIsLoading(true);
   
     try {
@@ -93,7 +88,7 @@ export default function Signup(props) {
         </LoaderButton>
       </form>
     );
-  }
+  }*/
 
   function renderForm() {
     return (
@@ -147,7 +142,9 @@ export default function Signup(props) {
 
   return (
     <div className="Signup">
-      {newUser === null ? renderForm() : renderConfirmationForm()}
+      {//newUser === null ? renderForm() : renderConfirmationForm()
+        renderForm()
+      }
     </div>
   );
 }

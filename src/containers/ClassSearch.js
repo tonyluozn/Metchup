@@ -50,7 +50,7 @@ export default function ClassSearch(props) {
       </div>
     </ListGroupItem>
     )
-  })
+  });
 
   return (
       <ListGroup>
@@ -58,7 +58,5 @@ export default function ClassSearch(props) {
       {courses}      
       </ListGroup>
       
-  )
-
-  
+  );
 }
