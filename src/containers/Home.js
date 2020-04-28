@@ -21,8 +21,8 @@ export default function Home(props) {
       }
   
       try {
-        const notes = await loadNotes();
-        setNotes(notes);
+        //const notes = await loadNotes();
+        //setNotes(notes);
       } catch (e) {
         alert(e);
       }
