@@ -4,16 +4,18 @@
   }
   
   .Home .lander h1 {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Arial", sans-serif;
     font-weight: 600;
   }
   
   .Home .lander p {
     color: #999;
   }
-
+  .Home .notes {
+    font-family: "Arial", sans-serif;
+  }
   .Home .notes h4 {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Arial", sans-serif;
     font-weight: 600;
     overflow: hidden;
     line-height: 1.5;

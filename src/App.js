@@ -44,7 +44,7 @@ function App(props) {
             {isAuthenticated
               ? <>
                   <NavItem onClick={handleLogout}>Logout</NavItem>
-                  <LinkContainer to="/notes/new">
+                  <LinkContainer to="/notes/search">
                     <NavItem>Class Search</NavItem>
                   </LinkContainer>
                 </>

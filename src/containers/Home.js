@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import { PageHeader, ListGroup, ListGroupItem, Button, Col, Row} from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import "./Home.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
 import ClassModal from './Modal'
+
 
 function loadNotes() {
   return API.get("notes", "/notes");
@@ -43,15 +45,9 @@ export default function Home(props) {
     </LinkContainer>
    
     <ListGroup>
-      <ListGroupItem>
         <ClassModal name="COMP_SCI 214"/>
-      </ListGroupItem>
-      <ListGroupItem>
         <ClassModal name="MATH 290-3"/>
-      </ListGroupItem>
-      <ListGroupItem>
         <ClassModal name="ECON 310-1"/>
-      </ListGroupItem>
     </ListGroup>
   </div>
   );
