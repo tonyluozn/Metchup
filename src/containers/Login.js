@@ -18,14 +18,16 @@ export default function Login(props) {
     setIsLoading(true);
   
     Auth.signInWithEmailAndPassword(email, password)
-    .then(function() {
-      console.log("Logged in");
-      // 如何跳转页面？
-    })
-    .catch(function(err) {
-      console.error("Error: ", err);
-    })
+    .catch(err => alert(err));
   }
+  Auth.onAuthStateChanged(user => {
+    if (user) {
+      console.log("Logged in as" + user.email);
+      //如何跳转页面？
+    } else {
+      console.log("Logged out");
+    }
+  })
 
   return (
     <div className="Login">

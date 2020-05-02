@@ -42,9 +42,7 @@ export default function Signup(props) {
     .then(function() { 
       console.log("User created with email: ", fields.email);
     })
-    .catch(function(error) {
-      console.error("Error: ", error);
-    });
+    .catch(err => alert(err));
     // 确认邮箱之类的有点复杂，先comment掉了
   }
   
