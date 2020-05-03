@@ -47,7 +47,7 @@ function App(props) {
       <Routes/>
     </div>
   );
-  //上面那个appProps好像是显示container用的？删掉之后没有下面的界面了
+  //上面那个routes好像是显示container用的？删掉之后没有下面的界面了。挺有意思的。
 }
 
 export default withRouter(App);
