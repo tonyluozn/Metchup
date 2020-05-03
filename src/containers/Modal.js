@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PageHeader, ListGroup, ListGroupItem, Modal, Button} from "react-bootstrap";
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Container from "react-bootstrap/Container";
+import { PageHeader, ListGroup, ListGroupItem, Modal, Button } from "react-bootstrap";
 
 export default function ClassModal(props) {
     const [show, setShow] = useState(false);
@@ -12,21 +9,9 @@ export default function ClassModal(props) {
 
     return (
         <>
-        <ListGroupItem>
-          <Container>
-           <Row>
-             <Col sm={9}> 
-               <Button variant="outline-dark-lg" onClick={handleShow}  block>
-                 {props.name}
-               </Button>
-             </Col>
-             <Col sm={3}>
-               <Button>
-                 Delete
-               </Button>
-             </Col>
-           </Row>
-          </Container>
+          <Button variant="outline-dark-lg" onClick={handleShow}>
+            {props.name}
+          </Button>
     
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -51,7 +36,6 @@ export default function ClassModal(props) {
               </Button>
             </Modal.Footer>
           </Modal>
-        </ListGroupItem>
         </>
       );
 }
