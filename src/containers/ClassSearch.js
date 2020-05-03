@@ -1,5 +1,5 @@
 import React from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import { PageHeader, ListGroup, ListGroupItem, Row, Col, Button } from "react-bootstrap";
 import data from "../data/4770/courses.json";
 import { useState } from 'react';
 import "./ClassSearch.css";
