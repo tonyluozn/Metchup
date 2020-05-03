@@ -28,7 +28,7 @@ function App(props) {
                   <LinkContainer to="/login">
                     <NavItem onClick={Auth.signOut()} >Logout</NavItem>
                   </LinkContainer>
-                  <LinkContainer to="/notes/new">
+                  <LinkContainer to="/notes/search">
                     <NavItem>Class Search</NavItem>
                   </LinkContainer>
                 </>
