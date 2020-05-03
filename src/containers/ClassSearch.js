@@ -1,5 +1,5 @@
 import React from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import { PageHeader, ListGroup, ListGroupItem, Row, Col, Button } from "react-bootstrap";
 import data from "../data/4770/courses.json";
 import { useState } from 'react';
 import "./ClassSearch.css";
@@ -41,13 +41,20 @@ export default function ClassSearch(props) {
   }).map(data=>{
     return(
     <ListGroupItem  key={(data.title+data.topic+data.section).toString()} className="Course" style={elementStyle}>
-      <div className="course-info">
-          <h4 className="course-title"><strong>{data.title} </strong></h4>
-          <h5 className="course-name"><strong> {data.subject} {data.catalog_num}</strong>: {data.topic}</h5>
-          <h6 className="course-term">{data.term}</h6>
-          <h6 className="course-instructor">{data.instructor}</h6>
-          <h6 className="course-section"> Section {data.section}</h6>
-      </div>
+      <Row>
+          <Col className="course-info" sm={9}>
+              <h4 className="course-title"><strong>{data.subject} {data.catalog_num}: {data.title} </strong></h4>
+              <h5 className="course-name"style={{color: 'grey'}}>{data.topic}</h5>
+              <h6 className="course-term">{data.termId}</h6>
+              <h6 className="course-instructor">{data.instructor}</h6>
+              <h6 className="course-section"> Section {data.section}</h6>
+          </Col>
+          <Col sm={3}>
+            <Button variant="outline-primary" block>
+              Add to Dashboard
+            </Button>
+          </Col>
+        </Row>
     </ListGroupItem>
     )
   });
