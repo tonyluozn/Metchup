@@ -1,5 +1,5 @@
 import React from "react";
-import { PageHeader, ListGroup, ListGroupItem, Row, Col, Button } from "react-bootstrap";
+import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import data from "../data/4770/courses.json";
 import { useState } from 'react';
 import "./ClassSearch.css";
@@ -29,7 +29,7 @@ export default function ClassSearch(props) {
       return true;
     } else if(course_data.term != null && course_data.term.toLowerCase().includes(search_input.toLowerCase())) {
       return true;
-    } 
+    }
   }
 
   const courses = data.filter((data)=>{
@@ -63,7 +63,7 @@ export default function ClassSearch(props) {
     <div>
       <ListGroup>
         <input type="text" placeholder="Enter class to search" style={elementStyle} onChange={(e)=>setString(e.target.value)} />
-        {courses}      
+        {courses}
       </ListGroup>
     </div>
   );

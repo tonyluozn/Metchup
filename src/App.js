@@ -7,10 +7,7 @@ import Routes from "./Routes";
 import { Auth } from "./firebase";
    
 function App(props) {
-  /*
-  useEffect(() => {
-    alert("DOM updated");
-  });*/
+  const refresher = useState();
   
   return (
     <div className="App container">
@@ -26,7 +23,7 @@ function App(props) {
             {Auth.currentUser
               ? <>
                   <LinkContainer to="/login">
-                    <NavItem onClick={Auth.signOut()} >Logout</NavItem>
+                    <NavItem onClick={() => Auth.signOut()} >Logout</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/notes/search">
                     <NavItem>Class Search</NavItem>
