@@ -8,7 +8,7 @@ import {
 import LoaderButton from "../components/LoaderButton";
 import { useFormFields } from "../libs/hooksLib";
 import "./Signup.css";
-import { Auth } from "../firebase"
+import { Auth, db } from "../firebase"
 
 export default function Signup(props) {
   const [fields, handleFieldChange] = useFormFields({
@@ -18,7 +18,6 @@ export default function Signup(props) {
     confirmPassword: "",
     confirmationCode: ""
   });
-  const [newUser, setNewUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -30,8 +29,25 @@ export default function Signup(props) {
     );
   }
 
-  function validateConfirmationForm() {
-    return fields.confirmationCode.length > 0;
+  // Helper function for creating user data. 
+  function createUserData() {
+    db.collection("Users").doc(fields.email).set({
+      name: fields.name,
+      c1: "",
+      c2: "",
+      c3: "",
+      c4: "",
+      c5: "",
+      c6: ""
+    }).then(() => {
+      console.log("User '" +fields.name + "' created with email '" + fields.email +"'");
+      props.history.push("/");
+    })
+    .catch(e => {
+      console.error("Error storing data; " + e);
+      alert(e);
+      setIsLoading(false);
+    });
   }
 
   async function handleSubmit(event) {
@@ -39,55 +55,15 @@ export default function Signup(props) {
     setIsLoading(true);
   
     Auth.createUserWithEmailAndPassword(fields.email, fields.password)
-    .then(function() { 
-      console.log("User created with email: ", fields.email);
-    })
-    .catch(err => alert(err));
-    // 确认邮箱之类的有点复杂，先comment掉了
-  }
-  
-  /*async function handleConfirmationSubmit(event) {
-    event.preventDefault();
-    setIsLoading(true);
-  
-    try {
-      await Auth.confirmSignUp(fields.email, fields.confirmationCode);
-      await Auth.signIn(fields.email, fields.password);
-  
-      props.userHasAuthenticated(true);
-      props.history.push("/");
-    } catch (e) {
-      alert(e.message);
+    .then(createUserData)
+    .catch(e => {
+      console.error("Error creating user; " + e);
+      alert(e);
       setIsLoading(false);
-    }
+    });
+    // 确认邮箱之类的放弃了
   }
-
-  function renderConfirmationForm() {
-    return (
-      <form onSubmit={handleConfirmationSubmit}>
-        <FormGroup controlId="confirmationCode" bsSize="large">
-          <ControlLabel>Confirmation Code</ControlLabel>
-          <FormControl
-            autoFocus
-            type="tel"
-            onChange={handleFieldChange}
-            value={fields.confirmationCode}
-          />
-          <HelpBlock>Please check your email for the code.</HelpBlock>
-        </FormGroup>
-        <LoaderButton
-          block
-          type="submit"
-          bsSize="large"
-          isLoading={isLoading}
-          disabled={!validateConfirmationForm()}
-        >
-          Verify
-        </LoaderButton>
-      </form>
-    );
-  }*/
-
+  
   function renderForm() {
     return (
       <form onSubmit={handleSubmit}>

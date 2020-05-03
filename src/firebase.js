@@ -18,6 +18,8 @@ firebase.initializeApp(firebaseConfig);
 // Test run
 export var db = firebase.firestore();
 export const Auth = firebase.auth();
+// 登录状态永久保存 -- 理论上是这样的，但是现在刷新就没了
+Auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 /*db.collection("users").add({
     first: "Go",

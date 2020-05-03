@@ -20,9 +20,11 @@ export default function Login(props) {
     Auth.signInWithEmailAndPassword(email, password)
     .catch(err => alert(err));
   }
+  //console是测试用的
   Auth.onAuthStateChanged(user => {
     if (user) {
       console.log("Logged in as" + user.email);
+      props.history.push("/");
       //如何跳转页面？
     } else {
       console.log("Logged out");

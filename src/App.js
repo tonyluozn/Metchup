@@ -4,7 +4,7 @@ import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import "./App.css";
 import Routes from "./Routes";
-import { Auth } from "aws-amplify";
+import { Auth } from "./firebase";
    
 function App(props) {
 
@@ -16,16 +16,13 @@ function App(props) {
   }, []);
   
   async function onLoad() {
+    //（常规）查看是否auth了
     try {
-      await Auth.currentSession();
-      userHasAuthenticated(true);
+      userHasAuthenticated(Auth.isAuthenticated);
     }
     catch(e) {
-      if (e !== 'No current user') {
-        alert(e);
-      }
+      alert(e);
     }
-    //change from false to true
     setIsAuthenticating(false);
   }
   
@@ -41,7 +38,7 @@ function App(props) {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            {isAuthenticated
+            {Auth.currentUser
               ? <>
                   <NavItem onClick={handleLogout}>Logout</NavItem>
                   <LinkContainer to="/notes/new">
@@ -64,12 +61,11 @@ function App(props) {
       <Routes appProps={{ isAuthenticated, userHasAuthenticated }} />
     </div>
   );
+  //上面那个appProps是干啥的？需要吗？
 
   async function handleLogout() {
-    await Auth.signOut();
   //set this to true 
     userHasAuthenticated(false);
-    
     props.history.push("/login");
   }
   async function handleGetin() {
