@@ -7,27 +7,12 @@ import Routes from "./Routes";
 import { Auth } from "./firebase";
    
 function App(props) {
-
-  const [isAuthenticating, setIsAuthenticating] = useState(true);
-  // below: right now set it to true 
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
+  /*
   useEffect(() => {
-    onLoad();
-  }, []);
-  
-  async function onLoad() {
-    //（常规）查看是否auth了
-    try {
-      userHasAuthenticated(Auth.isAuthenticated);
-    }
-    catch(e) {
-      alert(e);
-    }
-    setIsAuthenticating(false);
-  }
+    alert("DOM updated");
+  });*/
   
   return (
-    !isAuthenticating &&
     <div className="App container">
       <Navbar fluid collapseOnSelect>
         <Navbar.Header>
@@ -40,7 +25,9 @@ function App(props) {
           <Nav pullRight>
             {Auth.currentUser
               ? <>
-                  <NavItem onClick={handleLogout}>Logout</NavItem>
+                  <LinkContainer to="/login">
+                    <NavItem onClick={Auth.signOut()} >Logout</NavItem>
+                  </LinkContainer>
                   <LinkContainer to="/notes/new">
                     <NavItem>Class Search</NavItem>
                   </LinkContainer>
@@ -52,27 +39,15 @@ function App(props) {
                   <LinkContainer to="/login">
                     <NavItem>Login</NavItem>
                   </LinkContainer>
-                  <NavItem onClick={handleGetin}>Fast Getin</NavItem>
                 </>
             }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Routes appProps={{ isAuthenticated, userHasAuthenticated }} />
+      <Routes/>
     </div>
   );
-  //上面那个appProps是干啥的？需要吗？
-
-  async function handleLogout() {
-  //set this to true 
-    userHasAuthenticated(false);
-    props.history.push("/login");
-  }
-  async function handleGetin() {
-  //set this to true 
-    userHasAuthenticated(true);
-    props.history.push("/");
-  }
+  //上面那个appProps好像是显示container用的？删掉之后没有下面的界面了
 }
 
 export default withRouter(App);
