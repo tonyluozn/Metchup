@@ -3,7 +3,7 @@ import { PageHeader, ListGroup, ListGroupItem, Row, Col, Button } from "react-bo
 import data from "../data/4770/courses.json";
 import { useState } from 'react';
 import "./ClassSearch.css";
-import Courses from '../components/Courses';
+import { Auth } from "../firebase";
 
 export default function ClassSearch(props) {
 
