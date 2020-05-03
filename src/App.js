@@ -22,8 +22,8 @@ function App(props) {
           <Nav pullRight>
             {Auth.currentUser
               ? <>
-                  <LinkContainer to="/login">
-                    <NavItem onClick={() => Auth.signOut()} >Logout</NavItem>
+                  <LinkContainer to="/">
+                    <NavItem onClick={Auth.signOut}>Logout</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/notes/search">
                     <NavItem>Class Search</NavItem>
@@ -44,7 +44,7 @@ function App(props) {
       <Routes/>
     </div>
   );
-  //上面那个routes好像是显示container用的？删掉之后没有下面的界面了。挺有意思的。
+  // logout有问题，他现在长期是一个被按过的样子（颜色暗），而且要按两下才能退出，原因不明。
 }
 
 export default withRouter(App);
