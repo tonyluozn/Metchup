@@ -10,7 +10,7 @@ export default function ClassSearch(props) {
   const [input, setString] = useState(null);
 
   const elementStyle ={
-    borderRadius:'10px',
+    borderRadius:'5px',
     position:'relative',
     marginTop:'5px',
     marginBottom:'10px'
@@ -35,7 +35,7 @@ export default function ClassSearch(props) {
   const courses = data.filter((data)=>{
     if(input == null)
         return data;
-    else if(includes(data,input)){
+    else if(data!=null && includes(data,input)){
         return data;
     }
   }).map(data=>{
@@ -60,10 +60,10 @@ export default function ClassSearch(props) {
   });
 
   return (
+    <div>
       <ListGroup>
-      <input type="text" placeholder="Enter class" style={elementStyle} onChange={(e)=>setString(e.target.value)} />
-      {courses}      
+        <input type="text" placeholder="Enter class to search" style={elementStyle} onChange={(e)=>setString(e.target.value)} />
+        {courses}      
       </ListGroup>
-      
   );
 }
