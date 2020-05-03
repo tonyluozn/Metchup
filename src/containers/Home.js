@@ -66,10 +66,13 @@ export default function Home(props) {
     );
   }
 
-  function renderNotes() {
+  function renderNotes(props) {
+    console.log(props);
+    var message = <span><strong>Welcome</strong>, {props}</span>;
     return (
       <div className="notes">
-        <PageHeader>My Classes</PageHeader>
+        <PageHeader>{message}</PageHeader>
+        <h4>Let's play around with your dashboard to find study groups.</h4>
         <ListGroup>
           {!isLoading && renderNotesList(notes)}
         </ListGroup>
@@ -79,7 +82,7 @@ export default function Home(props) {
 
   return (
     <div className="Home">
-      {Auth.currentUser ? renderNotes() : renderLander()}
+      {Auth.currentUser ? renderNotes(Auth.currentUser.email) : renderLander()}
     </div>
   );
 }
