@@ -3,6 +3,7 @@ import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import "./Home.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
+import { Auth } from "../firebase";
 import ClassModal from './Modal'
 
 function loadNotes() {
@@ -14,11 +15,10 @@ export default function Home(props) {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function onLoad() {
-      if (!props.isAuthenticated) {
-        return;
-      }
+      if (!Auth.currentUser) { return; }
   
       try {
+        // 从database抓列表
         //const notes = await loadNotes();
         //setNotes(notes);
       } catch (e) {
@@ -29,7 +29,7 @@ export default function Home(props) {
     }
   
     onLoad();
-  }, [props.isAuthenticated]);
+  });
   
   function renderNotesList(notes) {
   return(
@@ -79,7 +79,7 @@ export default function Home(props) {
 
   return (
     <div className="Home">
-      {props.isAuthenticated ? renderNotes() : renderLander()}
+      {Auth.currentUser ? renderNotes() : renderLander()}
     </div>
   );
 }

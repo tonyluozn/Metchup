@@ -4,33 +4,12 @@ import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import "./App.css";
 import Routes from "./Routes";
-import { Auth } from "aws-amplify";
+import { Auth } from "./firebase";
    
 function App(props) {
-
-  const [isAuthenticating, setIsAuthenticating] = useState(true);
-  // below: right now set it to true 
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
-  useEffect(() => {
-    onLoad();
-  }, []);
-  
-  async function onLoad() {
-    try {
-      await Auth.currentSession();
-      userHasAuthenticated(true);
-    }
-    catch(e) {
-      if (e !== 'No current user') {
-        alert(e);
-      }
-    }
-    //change from false to true
-    setIsAuthenticating(false);
-  }
+  const refresher = useState();
   
   return (
-    !isAuthenticating &&
     <div className="App container">
       <Navbar fluid collapseOnSelect>
         <Navbar.Header>
@@ -41,10 +20,12 @@ function App(props) {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            {isAuthenticated
+            {Auth.currentUser
               ? <>
-                  <NavItem onClick={handleLogout}>Logout</NavItem>
-                  <LinkContainer to="/notes/new">
+                  <LinkContainer to="/login">
+                    <NavItem onClick={() => Auth.signOut()} >Logout</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/notes/search">
                     <NavItem>Class Search</NavItem>
                   </LinkContainer>
                 </>
@@ -55,28 +36,15 @@ function App(props) {
                   <LinkContainer to="/login">
                     <NavItem>Login</NavItem>
                   </LinkContainer>
-                  <NavItem onClick={handleGetin}>Fast Getin</NavItem>
                 </>
             }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Routes appProps={{ isAuthenticated, userHasAuthenticated }} />
+      <Routes/>
     </div>
   );
-
-  async function handleLogout() {
-    await Auth.signOut();
-  //set this to true 
-    userHasAuthenticated(false);
-    
-    props.history.push("/login");
-  }
-  async function handleGetin() {
-  //set this to true 
-    userHasAuthenticated(true);
-    props.history.push("/");
-  }
+  //上面那个routes好像是显示container用的？删掉之后没有下面的界面了。挺有意思的。
 }
 
 export default withRouter(App);

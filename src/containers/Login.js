@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
-import { Auth } from "aws-amplify";
+import { Auth } from "../firebase";
 import LoaderButton from "../components/LoaderButton";
 
 export default function Login(props) {
@@ -15,18 +15,21 @@ export default function Login(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-  
     setIsLoading(true);
   
-    try {
-      await Auth.signIn(email, password);
-      props.userHasAuthenticated(true);
-      props.history.push("/");
-    } catch (e) {
-      alert(e.message);
-      setIsLoading(false);
-    }
+    Auth.signInWithEmailAndPassword(email, password)
+    .catch(err => alert(err));
   }
+  //console是测试用的
+  Auth.onAuthStateChanged(user => {
+    if (user) {
+      console.log("Logged in as" + user.email);
+      props.history.push("/");
+      //如何跳转页面？
+    } else {
+      console.log("Logged out");
+    }
+  })
 
   return (
     <div className="Login">
