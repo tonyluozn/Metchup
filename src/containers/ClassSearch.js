@@ -40,7 +40,7 @@ export default function ClassSearch(props) {
     }
   }).map(data=>{
     return(
-    <ListGroupItem  key={(data.title+data.topic+data.section).toString()} className="Course" style={elementStyle}>
+    <ListGroupItem  key={(data.id).toString()} className="Course" style={elementStyle}>
       <Row>
           <Col className="course-info" sm={9}>
               <h4 className="course-title"><strong>{data.subject} {data.catalog_num}: {data.title} </strong></h4>
