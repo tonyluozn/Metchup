@@ -65,5 +65,6 @@ export default function ClassSearch(props) {
         <input type="text" placeholder="Enter class to search" style={elementStyle} onChange={(e)=>setString(e.target.value)} />
         {courses}      
       </ListGroup>
+    </div>
   );
 }
