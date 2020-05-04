@@ -7,7 +7,11 @@ import Routes from "./Routes";
 import { Auth } from "./firebase";
    
 function App(props) {
-  const refresher = useState();
+  // Initialize state
+  const [isAuth, setIsAuth] = useState(Boolean(Auth.currentUser));
+
+  // Refresh state
+  Auth.onAuthStateChanged(() => setIsAuth(Auth.currentUser));
   
   return (
     <div className="App container">
@@ -20,10 +24,10 @@ function App(props) {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            {Auth.currentUser
+            {isAuth
               ? <>
-                  <LinkContainer to="/">
-                    <NavItem onClick={Auth.signOut}>Logout</NavItem>
+                  <LinkContainer to="/login">
+                    <NavItem onClick={() => Auth.signOut()}>Logout</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/notes/search">
                     <NavItem>Class Search</NavItem>
@@ -44,7 +48,6 @@ function App(props) {
       <Routes/>
     </div>
   );
-  // logout有问题，他现在长期是一个被按过的样子（颜色暗），而且要按两下才能退出，原因不明。
 }
 
 export default withRouter(App);

@@ -14,12 +14,10 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
-// Test run
 export var db = firebase.firestore();
 export const Auth = firebase.auth();
-// 登录状态永久保存 -- 理论上是这样的，但是现在刷新就没了
-Auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+// How long does login status last
+Auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 
 //returns the person's data by the id
