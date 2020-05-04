@@ -23,7 +23,7 @@ Auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 
 //returns the person's data by the id
-function getDataById(id){
+export function getDataById(id){
     db.collection("Users").doc(id).get().then(function(doc) {
         if (doc.exists) {
             console.log("Document data:", doc.data());
@@ -36,7 +36,7 @@ function getDataById(id){
     });
 }
 //returns several person data enrolling in the queried classId
-function getDataByClass(classId){
+export function getDataByClass(classId){
     db.collection("Users").where("classes", "array-contains", classId).get().then(function(doc) {
         if (doc.exists) {
             console.log("Document data:", doc.data());
@@ -50,14 +50,14 @@ function getDataByClass(classId){
 }
 
 //adds class by classId to the person by the id
-function addClass(classId, id){
+export function addClass(classId, id){
     db.collection("Users").doc(id).update({
         classes: firebase.firestore.FieldValue.arrayUnion(classId)
     });      
 }
 
 //deletes class by classId to the person by the id
-function deleteClass(classId, id){
+export function deleteClass(classId, id){
     db.collection("Users").doc(id).update({
         classes: firebase.firestore.FieldValue.arrayRemove(classId)
     });      

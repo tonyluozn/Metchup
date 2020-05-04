@@ -3,7 +3,7 @@ import { PageHeader, ListGroup, ListGroupItem, Row, Col, Button } from "react-bo
 import data from "../data/4770/courses.json";
 import { useState } from 'react';
 import "./ClassSearch.css";
-import { Auth } from "../firebase";
+import { Auth, addClass } from "../firebase";
 
 export default function ClassSearch(props) {
 
@@ -14,6 +14,10 @@ export default function ClassSearch(props) {
     position:'relative',
     marginTop:'5px',
     marginBottom:'10px'
+  }
+
+  function handleClick(classKey){
+    addClass(classKey,Auth.id);
   }
 
   function includes(course_data,search_input){
@@ -50,7 +54,7 @@ export default function ClassSearch(props) {
               <h6 className="course-section"> Section {data.section}</h6>
           </Col>
           <Col sm={3}>
-            <Button variant="outline-primary" block>
+            <Button variant="outline-primary" onClick={() => this.addClass(auth.id, key)} block>
               Add to Dashboard
             </Button>
           </Col>
