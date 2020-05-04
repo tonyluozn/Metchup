@@ -3,7 +3,7 @@ import { PageHeader, ListGroup, ListGroupItem, Row, Col, Button } from "react-bo
 import data from "../data/4770/courses.json";
 import { useState } from 'react';
 import "./ClassSearch.css";
-import { Auth } from "../firebase";
+import { Auth, addClassToUser } from "../firebase";
 
 export default function ClassSearch(props) {
 
@@ -50,7 +50,7 @@ export default function ClassSearch(props) {
               <h6 className="course-section"> Section {data.section}</h6>
           </Col>
           <Col sm={3}>
-            <Button variant="outline-primary" block>
+            <Button variant="outline-primary" onClick={() => addClassToUser((data.id).toString(), Auth.currentUser.email)} block>
               Add to Dashboard
             </Button>
           </Col>
