@@ -18,18 +18,20 @@ firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 export const Auth = firebase.auth();
 // How long does login status last
-Auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+Auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 //returns the person's data by the id
-export function getUserById(id){
-    db.collection("Users").doc(id).get().then(function(doc) {
+export async function getUserById(id){
+    var retDoc;
+    await db.collection("Users").doc(id).get().then(function(doc) {
         if (doc.exists) {
             console.log("Document data:", doc.data());
-            return doc.data();
+            retDoc = doc.data();
         } else {
             console.log("No such document!");
         }
     }).catch(err => console.log("Error getting document: ", err));
+    return retDoc;
 }
 
 //returns several person data enrolling in the queried classId
@@ -48,11 +50,14 @@ export function getUserByClass(classId){
 export function addClassToUser(classId, id){
     console.log(classId);
     console.log(id);
+    // 想个办法限制课程数量？
     db.collection("Users").doc(id).update({
         classes: firebase.firestore.FieldValue.arrayUnion(classId)
     }).catch(err => {
         if (err.code === "not-found")
             alert("Error: user data not found");
+        else
+            alert(err);
     });
 }
 
@@ -63,5 +68,7 @@ export function deleteClassFromUser(classId, id){
     }).catch(err => {
         if (err.code === "not-found")
             alert("Error: user data not found");
+        else
+            alert(err);
     });
 }

@@ -1,29 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import "./Home.css";
-import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
-import { Auth } from "../firebase";
+import { Auth, getUserById } from "../firebase";
 import ClassModal from './Modal'
 
-function loadNotes() {
-  return API.get("notes", "/notes");
-}
-
 export default function Home(props) {
-  const [notes, setNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [name, setName] = useState("");
+  
   useEffect(() => {
     async function onLoad() {
       if (!Auth.currentUser) { return; }
   
-      try {
-        // 从database抓列表
-        //const notes = await loadNotes();
-        //setNotes(notes);
-      } catch (e) {
-        alert(e);
-      }
+      await getUserById(Auth.currentUser.email)
+      .then(data => setName(data.name))
+      .catch(err => alert(err));
   
       setIsLoading(false);
     }
@@ -31,7 +23,7 @@ export default function Home(props) {
     onLoad();
   });
   
-  function renderNotesList(notes) {
+  function renderNotesList() {
   return(
   <div>
     <LinkContainer key="new" to="/notes/search">
@@ -66,23 +58,25 @@ export default function Home(props) {
     );
   }
 
+
   function renderNotes(props) {
-    console.log(props);
+    
     var message = <span><strong>Welcome</strong>, {props}</span>;
     return (
       <div className="notes">
         <PageHeader>{message}</PageHeader>
         <h4>Let's play around with your dashboard to find study groups.</h4>
         <ListGroup>
-          {!isLoading && renderNotesList(notes)}
+          {!isLoading && renderNotesList()}
         </ListGroup>
       </div>
     );
   }
+  
 
   return (
     <div className="Home">
-      {Auth.currentUser ? renderNotes(Auth.currentUser.email) : renderLander()}
+      {Auth.currentUser ? renderNotes(name) : renderLander()}
     </div>
   );
 }

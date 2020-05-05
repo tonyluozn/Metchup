@@ -23,6 +23,7 @@ export default function Login(props) {
       props.history.push('/');
     })
     .catch(err => alert(err));
+    setIsLoading(false);
   }
 
   return (
