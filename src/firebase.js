@@ -48,17 +48,21 @@ export function getUserByClass(classId){
 
 //adds class by classId to the person by the id
 export function addClassToUser(classId, id){
-    console.log(classId);
-    console.log(id);
-    // 想个办法限制课程数量？
-    db.collection("Users").doc(id).update({
-        classes: firebase.firestore.FieldValue.arrayUnion(classId)
-    }).catch(err => {
-        if (err.code === "not-found")
-            alert("Error: user data not found");
-        else
-            alert(err);
-    });
+    db.collection("Users").doc(id).get().then(function(doc){
+        var len = doc.data().classes.length;
+        if(len >= 6){
+            alert("Achieved Maximum Class Capacity; Please check Dashboard");
+        } else {
+            db.collection("Users").doc(id).update({
+                classes: firebase.firestore.FieldValue.arrayUnion(classId)
+            }).catch(err => {
+                if (err.code === "not-found")
+                    alert("Error: user data not found");
+                else
+                    alert(err);
+            });
+        }
+    }); 
 }
 
 //deletes class by classId to the person by the id

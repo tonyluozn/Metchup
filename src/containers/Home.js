@@ -8,6 +8,7 @@ import ClassModal from './Modal'
 export default function Home(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [name, setName] = useState("");
+  const [classes, setClasses] = useState("");
   
   useEffect(() => {
     async function onLoad() {
