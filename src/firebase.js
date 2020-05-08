@@ -49,7 +49,12 @@ export function getUserByClass(classId){
 //adds class by classId to the person by the id
 export function addClassToUser(classId, id){
     db.collection("Users").doc(id).get().then(function(doc){
-        var len = doc.data().classes.length;
+        var classes = doc.data().classes;
+        var len = classes.length;
+        if(classes.includes(classId)){
+            alert("Class already added!");
+            return;
+        }
         if(len >= 6){
             alert("Achieved Maximum Class Capacity; Please check Dashboard");
         } else {

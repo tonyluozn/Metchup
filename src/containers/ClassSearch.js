@@ -33,8 +33,9 @@ export default function ClassSearch(props) {
   }
 
   const courses = data.filter((data)=>{
-    if(input == null)
+    if(input == null){
         return data;
+    }
     else if(data!=null && includes(data,input)){
         return data;
     }
