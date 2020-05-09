@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PageHeader, ListGroup, ListGroupItem, Modal, Button } from "react-bootstrap";
+import { Modal, Button,Col } from "react-bootstrap";
 
 export default function ClassModal(props) {
     const [show, setShow] = useState(false);
@@ -12,6 +12,7 @@ export default function ClassModal(props) {
           <Button variant="outline-dark-lg" onClick={handleShow}>
             {props.name}
           </Button>
+         
     
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
