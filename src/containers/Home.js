@@ -26,7 +26,7 @@ export default function Home(props) {
     }
   
     onLoad();
-  },[classes]);
+  },[]);
   
   function renderNotesList() {
     return(
