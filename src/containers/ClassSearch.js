@@ -54,13 +54,13 @@ export default function ClassSearch(props) {
     </ListGroupItem>
     )
   });
-
+  var search_text = "That's the first 50 courses shown by: "+ input +". Please narrow you search.";
   return (
     <div>
       <ListGroup>
         <input type="text" placeholder="Enter class to search" style={elementStyle} onChange={e => setInput(e.target.value)} block />
         {courses}
-        <h4>That's the first 50 courses shown. Please narrow you search.</h4>
+        <h4>{search_text}</h4>
       </ListGroup>
     </div>
   );
