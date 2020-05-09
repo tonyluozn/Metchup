@@ -11,18 +11,20 @@ export default function Home(props) {
   const [classes, setClasses] = useState("");
   
   useEffect(() => {
-    async function onLoad() {
-      if (!Auth.currentUser) { return; }
-  
-      await getUserById(Auth.currentUser.email)
-      .then(data => setName(data.name))
-      .catch(err => alert(err));
-  
-      setIsLoading(false);
-    }
-  
     onLoad();
-  });
+  }, []);
+  
+  async function onLoad() {
+    if (!Auth.currentUser) { return; }
+    await getUserById(Auth.currentUser.email)
+    .then(data => {
+      setName(data.name);
+      setClasses(data.classes);
+    })
+    .catch(err => alert(err));
+
+    setIsLoading(false);
+  }
   
   function renderNotesList() {
   return(
@@ -59,9 +61,7 @@ export default function Home(props) {
     );
   }
 
-
-  function renderNotes(props) {
-    
+  function renderDashboard(props) {
     var message = <span><strong>Welcome</strong>, {props}</span>;
     return (
       <div className="notes">
@@ -74,10 +74,9 @@ export default function Home(props) {
     );
   }
   
-
   return (
     <div className="Home">
-      {Auth.currentUser ? renderNotes(name) : renderLander()}
+      {Auth.currentUser ? renderDashboard(name) : renderLander()}
     </div>
   );
 }
