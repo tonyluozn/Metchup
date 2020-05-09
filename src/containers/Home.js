@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import { PageHeader, ListGroup, ListGroupItem, Button, Col} from "react-bootstrap";
+import Card from "react-bootstrap/Card";
 import "./Home.css";
 import { LinkContainer } from "react-router-bootstrap";
-import { Auth, getUserById } from "../firebase";
+import { Auth, getUserById, deleteClassFromUser } from "../firebase";
 import ClassModal from './Modal'
 
 export default function Home(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [name, setName] = useState("");
   const [classes, setClasses] = useState("");
+  const [user, setUser] = useState("");
   
   useEffect(() => {
     async function onLoad() {
       if (!Auth.currentUser) { return; }
-  
       await getUserById(Auth.currentUser.email)
-      .then(data => setName(data.name))
+      .then(data => {
+        setName(data.user);
+        //setClasses(data.classes);
+      })
       .catch(err => alert(err));
   
       setIsLoading(false);
@@ -36,20 +40,25 @@ export default function Home(props) {
     </LinkContainer>
    
     <ListGroup>
-      <ListGroupItem>
-        <ClassModal name="COMP_SCI 214"/>
-      </ListGroupItem>
-      <ListGroupItem>
-        <ClassModal name="MATH 290-3"/>
-      </ListGroupItem>
-      <ListGroupItem>
-        <ClassModal name="ECON 310-1"/>
-      </ListGroupItem>
+      {renderClass("e")}
     </ListGroup>
   </div>
   );
   }
-
+  function renderClass(props){
+    return(
+    <>
+      <ListGroupItem key={props}>
+        <Col md={11} >
+          <ClassModal name={props}/>
+        </Col>
+        <Col md={{ span: 1, offset: 4 }} >
+          <Button>Delete</Button>
+        </Col>
+      </ListGroupItem>
+    </>
+    );
+  }
   function renderLander() {
     return (
       <div className="lander">
