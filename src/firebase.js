@@ -68,6 +68,7 @@ export function addClassToUser(classId, id){
 
 //deletes class by classId to the person by the id
 export function deleteClassFromUser(classId, id){
+    console.log("呃呃")
     db.collection("Users").doc(id).update({
         classes: firebase.firestore.FieldValue.arrayRemove(classId)
     }).then(alert("Class successfully removed!"))

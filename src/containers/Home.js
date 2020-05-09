@@ -9,7 +9,7 @@ import ClassModal from './Modal'
 export default function Home(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [name, setName] = useState("");
-  const [classes, setClasses] = useState("");
+  const [classes, setClasses] = useState([]);
   const [user, setUser] = useState("");
   
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function Home(props) {
       await getUserById(Auth.currentUser.email)
       .then(data => {
         setName(data.user);
-        //setClasses(data.classes);
+        setClasses(data.classes);
       })
       .catch(err => alert(err));
   
@@ -26,34 +26,38 @@ export default function Home(props) {
     }
   
     onLoad();
-  });
+  },[classes]);
   
   function renderNotesList() {
-  return(
-  <div>
-    <LinkContainer key="new" to="/notes/search">
-      <ListGroupItem>
-        <h4>
-          <b>{"\uFF0B"}</b> Add a new class
-        </h4>
-      </ListGroupItem>
-    </LinkContainer>
-   
-    <ListGroup>
-      {renderClass("e")}
-    </ListGroup>
-  </div>
-  );
+    return(
+    <div>
+      <LinkContainer key="new" to="/notes/search">
+        <ListGroupItem>
+          <h4>
+            <b>{"\uFF0B"}</b> Add a new class
+          </h4>
+        </ListGroupItem>
+      </LinkContainer>
+    
+      <ListGroup>
+        {classes.map(e=>renderClass(e))}
+      </ListGroup>
+    </div>
+    );
+  }
+  function HandleClick(props){
+    console.log("呃呃，还是删除"+props+"吧");
+    deleteClassFromUser(props, Auth.currentUser.email);
   }
   function renderClass(props){
     return(
     <>
       <ListGroupItem key={props}>
-        <Col md={11} >
+        <Col md={11}>
           <ClassModal name={props}/>
         </Col>
-        <Col md={{ span: 1, offset: 4 }} >
-          <Button>Delete</Button>
+        <Col md={{ span: 4, offset: 4 }}>
+          <Button onClick={()=>HandleClick(props)}>Delete</Button>
         </Col>
       </ListGroupItem>
     </>
@@ -86,7 +90,7 @@ export default function Home(props) {
 
   return (
     <div className="Home">
-      {Auth.currentUser ? renderNotes(name) : renderLander()}
+      {Auth.currentUser ? renderNotes("呃呃") : renderLander()}
     </div>
   );
 }
