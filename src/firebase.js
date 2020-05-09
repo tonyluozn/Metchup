@@ -21,63 +21,65 @@ export const Auth = firebase.auth();
 Auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 //returns the person's data by the id
-export async function getUserById(id){
+export async function getUserById(userId){
     var retDoc;
-    await db.collection("Users").doc(id).get().then(function(doc) {
+    await db.collection("Users").doc(userId).get().then(function(doc) {
         if (doc.exists) {
             console.log("Document data:", doc.data());
             retDoc = doc.data();
         } else {
             console.log("No such document!");
         }
-    }).catch(err => console.log("Error getting document: ", err));
+    }).catch(err => handleErr(err));
     return retDoc;
 }
 
 //returns several person data enrolling in the queried classId
-export function getUserByClass(classId){
-    db.collection("Users").where("classes", "array-contains", classId).get().then(function(doc) {
+export async function getUserByClass(classId){
+    var retDoc;
+    await db.collection("Users").where("classes", "array-contains", classId).get().then(function(doc) {
         if (doc.exists) {
             console.log("Document data:", doc.data());
-            return doc.data();
+            retDoc = doc.data();
         } else {
             console.log("No such document!");
         }
-    }).catch(err => console.log("Error getting document: ", err));
+    }).catch(err => handleErr(err));
+    return retDoc;
 }
 
 //adds class by classId to the person by the id
 export function addClassToUser(classId, id){
-    db.collection("Users").doc(id).get().then(function(doc){
+    db.collection("Users").doc(id).get().then(function(doc) {
         var classes = doc.data().classes;
         var len = classes.length;
-        if(classes.includes(classId)){
-            alert("Class already added!");
-            return;
-        }
-        if(len >= 6){
+        if(classes.includes(classId)) {
+            alert("Class already exists!");
+        } else if(len >= 6) {
             alert("Achieved Maximum Class Capacity; Please check Dashboard");
         } else {
             db.collection("Users").doc(id).update({
                 classes: firebase.firestore.FieldValue.arrayUnion(classId)
-            }).catch(err => {
-                if (err.code === "not-found")
-                    alert("Error: user data not found");
-                else
-                    alert(err);
-            });
+            }).then(alert("Class successfully added!"))
+            .catch(err => handleErr(err));
         }
-    }); 
+    }).catch(err => handleErr(err));
 }
 
 //deletes class by classId to the person by the id
 export function deleteClassFromUser(classId, id){
     db.collection("Users").doc(id).update({
         classes: firebase.firestore.FieldValue.arrayRemove(classId)
-    }).catch(err => {
-        if (err.code === "not-found")
-            alert("Error: user data not found");
-        else
-            alert(err);
-    });
+    }).then(alert("Class successfully removed!"))
+    .catch(err => handleErr(err));
+}
+
+// handles errors with custom messages
+export function handleErr(err) {
+    if (err.code === "not-found") {
+        alert("Error: data not found");
+    } else {
+        alert(err);
+    }
+    //More cases
 }
