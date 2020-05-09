@@ -18,19 +18,22 @@ function App(props) {
       <Navbar fluid collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/"><strong>Metchup</strong></Link>
+          <Link to="/"><strong>Metchup</strong></Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
             {isAuth
-              ? <>
-                  <LinkContainer to="/login">
-                    <NavItem onClick={() => Auth.signOut()}>Logout</NavItem>
+              ? <>   
+                  <LinkContainer to="/">
+                    <NavItem>Dashboard</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/notes/search">
                     <NavItem>Class Search</NavItem>
+                  </LinkContainer>
+                  <LinkContainer to="/login">
+                    <NavItem onClick={() => Auth.signOut()}>Logout</NavItem>
                   </LinkContainer>
                 </>
               : <>

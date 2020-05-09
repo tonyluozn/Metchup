@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { PageHeader, ListGroup, ListGroupItem, Button, Col} from "react-bootstrap";
-import Card from "react-bootstrap/Card";
 import "./Home.css";
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth, getUserById, deleteClassFromUser } from "../firebase";
