@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { PageHeader, ListGroup, ListGroupItem, Button, Col} from "react-bootstrap";
-import Card from "react-bootstrap/Card";
 import "./Home.css";
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth, getUserById, deleteClassFromUser } from "../firebase";
 import ClassModal from './Modal'
+import courseData from "../data/4770/courses.json";
 
 export default function Home(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +17,7 @@ export default function Home(props) {
       if (!Auth.currentUser) { return; }
       await getUserById(Auth.currentUser.email)
       .then(data => {
-        setName(data.user);
+        setName(data.name);
         setClasses(data.classes);
       })
       .catch(err => alert(err));
@@ -40,21 +40,32 @@ export default function Home(props) {
       </LinkContainer>
     
       <ListGroup>
-        {classes.map(e=>renderClass(e))}
+        {classes.map(e=>RenderClass(e))}
       </ListGroup>
     </div>
     );
   }
+
+  function searchClassAttribute(id){
+    for(var i = 0; i< courseData.length; i++){
+      if(courseData[i].id == id){
+        var classAttribute = courseData[i].subject + " " + courseData[i].catalog_num;
+        return classAttribute;
+      }
+    }
+  }
+
   function HandleClick(props){
-    console.log("呃呃，还是删除"+props+"吧");
+    //console.log("呃呃，还是删除"+props+"吧");
     deleteClassFromUser(props, Auth.currentUser.email);
   }
-  function renderClass(props){
+  
+  function RenderClass(props){
     return(
     <>
       <ListGroupItem key={props}>
         <Col md={11}>
-          <ClassModal name={props}/>
+          <ClassModal name={searchClassAttribute(props)} id={props}/>
         </Col>
         <Col md={{ span: 4, offset: 4 }}>
           <Button onClick={()=>HandleClick(props)}>Delete</Button>
@@ -63,6 +74,7 @@ export default function Home(props) {
     </>
     );
   }
+
   function renderLander() {
     return (
       <div className="lander">
@@ -74,7 +86,6 @@ export default function Home(props) {
 
 
   function renderNotes(props) {
-    
     var message = <span><strong>Welcome</strong>, {props}</span>;
     return (
       <div className="notes">
@@ -90,7 +101,7 @@ export default function Home(props) {
 
   return (
     <div className="Home">
-      {Auth.currentUser ? renderNotes("呃呃") : renderLander()}
+      {Auth.currentUser ? renderNotes(name) : renderLander()}
     </div>
   );
 }

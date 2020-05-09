@@ -31,7 +31,9 @@ export default function ClassSearch(props) {
     else if(course!=null && includes(course)){
         return course;
     }
-  }).map(course => {
+  })
+  .slice(0,50)
+  .map(course => {
     return(
     <ListGroupItem  key={(course.id).toString()} className="Course" style={elementStyle}>
       <Row>
@@ -58,6 +60,7 @@ export default function ClassSearch(props) {
       <ListGroup>
         <input type="text" placeholder="Enter class to search" style={elementStyle} onChange={e => setInput(e.target.value)} block />
         {courses}
+        <h4>That's the first 50 courses shown. Please narrow you search.</h4>
       </ListGroup>
     </div>
   );

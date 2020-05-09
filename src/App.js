@@ -15,7 +15,7 @@ function App(props) {
   
   return (
     <div className="App container">
-      <Navbar fluid collapseOnSelect>
+      <Navbar sticky="top" fluid>
         <Navbar.Header>
           <Navbar.Brand>
             <Link to="/"><strong>Metchup</strong></Link>
@@ -26,6 +26,9 @@ function App(props) {
           <Nav pullRight>
             {isAuth
               ? <>
+                  <LinkContainer to="/">
+                    <NavItem>Dashboard</NavItem>
+                  </LinkContainer>
                   <LinkContainer to="/login">
                     <NavItem onClick={() => Auth.signOut()}>Logout</NavItem>
                   </LinkContainer>

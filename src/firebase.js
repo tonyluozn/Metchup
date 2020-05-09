@@ -25,7 +25,7 @@ export async function getUserById(userId){
     var retDoc;
     await db.collection("Users").doc(userId).get().then(function(doc) {
         if (doc.exists) {
-            console.log("Document data:", doc.data());
+            console.log("getUserById returns Document data:", doc.data());
             retDoc = doc.data();
         } else {
             console.log("No such document!");
@@ -39,10 +39,10 @@ export async function getUserByClass(classId){
     var retDoc;
     await db.collection("Users").where("classes", "array-contains", classId).get().then(function(doc) {
         if (doc.exists) {
-            console.log("Document data:", doc.data());
+            console.log("getUserByClass returns Document data:", doc.data());
             retDoc = doc.data();
         } else {
-            console.log("No such document!");
+            console.log("No such user in "+classId+"!");
         }
     }).catch(err => handleErr(err));
     return retDoc;
@@ -68,7 +68,6 @@ export function addClassToUser(classId, id){
 
 //deletes class by classId to the person by the id
 export function deleteClassFromUser(classId, id){
-    console.log("呃呃")
     db.collection("Users").doc(id).update({
         classes: firebase.firestore.FieldValue.arrayRemove(classId)
     }).then(alert("Class successfully removed!"))
