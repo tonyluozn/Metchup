@@ -26,7 +26,7 @@ export default function Home(props) {
     }
   
     onLoad();
-  },[]);
+  },[classes]);
   
   function renderNotesList() {
     return(
@@ -40,13 +40,14 @@ export default function Home(props) {
       </LinkContainer>
     
       <ListGroup>
-        {classes.map(e=>console.log(e))}
+        {classes.map(e=>renderClass(e))}
       </ListGroup>
     </div>
     );
   }
-  function HandleClick(){
-    console.log("呃呃，还是删除吧");
+  function HandleClick(props){
+    console.log("呃呃，还是删除"+props+"吧");
+    deleteClassFromUser(props, Auth.currentUser.email);
   }
   function renderClass(props){
     return(
@@ -56,7 +57,7 @@ export default function Home(props) {
           <ClassModal name={props}/>
         </Col>
         <Col md={{ span: 4, offset: 4 }}>
-          <Button onClick={HandleClick}>Delete</Button>
+          <Button onClick={()=>HandleClick(props)}>Delete</Button>
         </Col>
       </ListGroupItem>
     </>
