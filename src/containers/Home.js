@@ -63,7 +63,7 @@ export default function Home(props) {
   function renderClass(clsId){
     return(
     <>
-      <ListGroupItem key={clsId}>
+      <ListGroupItem key={clsId.toString()}>
         <Col md={11}>
           <ClassModal name={searchClassAttribute(clsId)} id={clsId}/>
         </Col>

@@ -6,7 +6,7 @@ export default function ClassModal(props) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true); ClassContent(props);
+    const handleShow = () => {setShow(true); ClassContent(props);}
 
     function ClassContent(props){
       console.log("props.name is "+props.name +", props.id is "+props.id);
