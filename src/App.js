@@ -35,6 +35,9 @@ function App(props) {
                   <LinkContainer to="/notes/search">
                     <NavItem>Class Search</NavItem>
                   </LinkContainer>
+                  <LinkContainer to="/Message">
+                    <NavItem>Message</NavItem>
+                  </LinkContainer>
                 </>
               : <>
                   <LinkContainer to="/signup">
