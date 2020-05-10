@@ -12,21 +12,20 @@ export default function Home(props) {
   const [classes, setClasses] = useState([]);
   const [user, setUser] = useState("");
   
-  useEffect(() => {
-    async function onLoad() {
-      if (!Auth.currentUser) { return; }
-      await getUserById(Auth.currentUser.email)
-      .then(data => {
-        setName(data.name);
-        setClasses(data.classes);
-      })
-  
-      setIsLoading(false);
-    }
-  
-    onLoad();
-  },[isLoading]);
-  
+  useEffect(() => {onLoad()}, [isLoading, user]);
+  Auth.onAuthStateChanged(() => setUser(Auth.currentUser));
+
+  async function onLoad() {
+    if (!Auth.currentUser) { return; }
+    await getUserById(Auth.currentUser.email)
+    .then(data => {
+      setName(data.name);
+      setClasses(data.classes);
+    });
+
+    setIsLoading(false);
+  }
+
   function renderClassList() {
     return(
     <div>
