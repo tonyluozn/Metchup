@@ -20,15 +20,14 @@ export default function Home(props) {
         setName(data.name);
         setClasses(data.classes);
       })
-      .catch(err => alert(err));
   
       setIsLoading(false);
     }
   
     onLoad();
-  },[]);
+  },[isLoading]);
   
-  function renderNotesList() {
+  function renderClassList() {
     return(
     <div>
       <LinkContainer key="new" to="/notes/search">
@@ -40,14 +39,14 @@ export default function Home(props) {
       </LinkContainer>
     
       <ListGroup>
-        {classes.map(e=>RenderClass(e))}
+        {classes.map(clsId => renderClass(clsId))}
       </ListGroup>
     </div>
     );
   }
 
   function searchClassAttribute(id){
-    for(var i = 0; i< courseData.length; i++){
+    for(var i = 0; i < courseData.length; i++){
       if(courseData[i].id == id){
         var classAttribute = courseData[i].subject + " " + courseData[i].catalog_num;
         return classAttribute;
@@ -55,20 +54,21 @@ export default function Home(props) {
     }
   }
 
-  function HandleClick(props){
+  function handleClick(props){
     //console.log("呃呃，还是删除"+props+"吧");
     deleteClassFromUser(props, Auth.currentUser.email);
+    setIsLoading(true);
   }
   
-  function RenderClass(props){
+  function renderClass(clsId){
     return(
     <>
-      <ListGroupItem key={props}>
+      <ListGroupItem key={clsId}>
         <Col md={11}>
-          <ClassModal name={searchClassAttribute(props)} id={props}/>
+          <ClassModal name={searchClassAttribute(clsId)} id={clsId}/>
         </Col>
         <Col md={{ span: 4, offset: 4 }}>
-          <Button onClick={()=>HandleClick(props)}>Delete</Button>
+          <Button onClick={()=>handleClick(clsId)}>Delete</Button>
         </Col>
       </ListGroupItem>
     </>
@@ -85,14 +85,14 @@ export default function Home(props) {
   }
 
 
-  function renderNotes(props) {
-    var message = <span><strong>Welcome</strong>, {props}</span>;
+  function renderDashboard() {
+    var message = <span><strong>Welcome, {name}.</strong></span>;
     return (
       <div className="notes">
         <PageHeader>{message}</PageHeader>
         <h4>Let's play around with your dashboard to find study groups.</h4>
         <ListGroup>
-          {!isLoading && renderNotesList()}
+          {!isLoading && renderClassList()}
         </ListGroup>
       </div>
     );
@@ -101,7 +101,7 @@ export default function Home(props) {
 
   return (
     <div className="Home">
-      {Auth.currentUser ? renderNotes(name) : renderLander()}
+      {Auth.currentUser ? renderDashboard() : renderLander()}
     </div>
   );
 }
