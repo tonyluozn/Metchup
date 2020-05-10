@@ -3,13 +3,14 @@ import { FormGroup, FormControl } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import { db} from "../firebase";
 import "./Message.css";
-import user from "./Home";
 
 export default function Message(props) {
 //props:   sender,reciever 
 
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const user = props.location.query;
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -26,12 +27,12 @@ export default function Message(props) {
     db.collection("Messages").doc().set({
         content: content.trim(),
         //fix later 
-        idFrom: 'tonyluo2023@u.northwestern.edu',
+        idFrom: user,
         idTo: 'andrewsu2023@u.northwestern.edu', 
         time:  ''//timestamp
 
     }).then(() => {
-        console.log("User '" +user.name + "' sent '" + user.name +"'message"+content);
+        console.log("User '" +user + "' sent '" + user +"'message"+content);
         props.history.push("/");
     })
     .catch(e => {
@@ -39,7 +40,7 @@ export default function Message(props) {
         alert(e);
         setIsLoading(false);
     });
-          
+
 
   }
   function renderUserInfo() {
@@ -47,7 +48,7 @@ export default function Message(props) {
     return (
         <div class="User">
           <div class="user-info">
-            <h5 class="course-title">Reciever: {user.name} </h5>
+            <h5 class="course-title">Reciever: {user} </h5>
            // Display reciever's name, other info, and classes  
           </div>
         </div>
@@ -64,7 +65,7 @@ export default function Message(props) {
                 onChange={e => setContent(e.target.value)}
               />
             </FormGroup>
-    
+
             <LoaderButton
               block
               type="submit"
@@ -78,11 +79,11 @@ export default function Message(props) {
         </div>
       );
   }
- 
+
   return (
     <div className="Message">
       {renderUserInfo()}
       {renderForm()}
     </div>
   );
-} 
+}

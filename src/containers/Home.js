@@ -26,6 +26,12 @@ export default function Home(props) {
     setIsLoading(false);
   }
 
+  //pass user to /message
+  var path = {
+    pathname:'/Message',
+    query:name,
+  }
+
   function renderClassList() {
     return(
     <div>
@@ -40,6 +46,14 @@ export default function Home(props) {
       <ListGroup>
         {classes.map(clsId => renderClass(clsId))}
       </ListGroup>
+      
+      <LinkContainer to={path}>
+        <ListGroupItem>
+          <h4>
+            <b>{"\uFF0B"}</b> Send Message
+          </h4>
+        </ListGroupItem>
+      </LinkContainer>
     </div>
     );
   }
@@ -60,6 +74,8 @@ export default function Home(props) {
   }
   
   function renderClass(clsId){
+    //pass the data?
+    //props.history.push(path);
     return(
     <>
       <ListGroupItem key={clsId.toString()}>
