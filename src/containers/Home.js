@@ -28,14 +28,14 @@ export default function Home(props) {
 
   //pass user to /message
   var path = {
-    pathname:'/Message',
-    query:name,
+    pathname:'/message',
+    query: name,
   }
 
   function renderClassList() {
     return(
     <div>
-      <LinkContainer key="new" to="/notes/search">
+      <LinkContainer key="new" to="/search">
         <ListGroupItem>
           <h4>
             <b>{"\uFF0B"}</b> Add a new class
