@@ -77,7 +77,7 @@ export function deleteClassFromUser(classId, id){
 // handles errors with custom messages
 export function handleErr(err) {
     if (err.code === "not-found") {
-        alert("Error: data not found");
+        alert("Backend error: data not found");
     } else {
         alert(err);
     }

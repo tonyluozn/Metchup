@@ -9,7 +9,7 @@ import NewNote from "./containers/NewNote";
 import ClassSearch from "./containers/ClassSearch";
 import Message from "./containers/Message";
 
-export default function Routes({ appProps }) {
+export default function Routes(appProps) {
     return (
       <Switch>
         <AppliedRoute path="/" exact component={Home} appProps={appProps} />

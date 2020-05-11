@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import { Auth } from "../firebase";
@@ -8,6 +8,13 @@ export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (Auth.currentUser) {
+      alert("Already logged in!");
+      props.history.push("/");
+    }
+  }, [])
 
   function validateForm() {
     return email.length > 0 && password.length > 0;

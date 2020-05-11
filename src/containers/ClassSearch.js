@@ -25,12 +25,7 @@ export default function ClassSearch(props) {
   }
 
   const courses = data.filter(course => {
-    if(input == null){
-        return course;
-    }
-    else if(course!=null && includes(course)){
-        return course;
-    }
+    return !input || (course && includes(course));
   })
   .slice(0,50)
   .map(course => {
@@ -54,7 +49,14 @@ export default function ClassSearch(props) {
     </ListGroupItem>
     )
   });
-  var search_text = "That's the first 50 courses shown by: "+ input +". Please narrow you search.";
+
+  var search_text = "These are the first 50 results containing '" + input + "'. Please narrow your search.";
+  if (courses.length && courses.length < 50) {
+    search_text = courses.length + " results. "
+  } else if (courses.length === 0) {
+    search_text = "No result."
+  }
+
   return (
     <div>
       <ListGroup>

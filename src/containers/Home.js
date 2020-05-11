@@ -21,7 +21,7 @@ export default function Home(props) {
     .then(data => {
       setName(data.name);
       setClasses(data.classes);
-    });
+    }).catch(err => alert(err));
 
     setIsLoading(false);
   }
