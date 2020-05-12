@@ -68,7 +68,6 @@ export default function Home(props) {
   }
 
   function handleClick(props){
-    //console.log("呃呃，还是删除"+props+"吧");
     deleteClassFromUser(props, Auth.currentUser.email);
     setIsLoading(true);
   }

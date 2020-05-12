@@ -28,17 +28,17 @@ function App(props) {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Routes withRouter="/dashsboard"/>
+      <Routes/>
     </div>
   );
 
   function loggedIn() {
     return (
       <>
-        <LinkContainer to="/" exact>
+        <LinkContainer to="/">
           <NavItem>Dashboard</NavItem>
         </LinkContainer>
-        <LinkContainer to="/search">
+        <LinkContainer to="/notes/search">
           <NavItem>Class Search</NavItem>
         </LinkContainer>
 

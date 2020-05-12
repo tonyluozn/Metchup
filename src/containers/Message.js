@@ -48,7 +48,7 @@ export default function Message(props) {
     return (
         <div class="User">
           <div class="user-info">
-            <h5 class="course-title">Reciever: {user} </h5>
+            <h5 class="course-title">Receiver: {user} </h5>
            // Display reciever's name, other info, and classes  
           </div>
         </div>
